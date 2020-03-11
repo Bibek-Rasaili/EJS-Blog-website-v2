@@ -32,14 +32,16 @@ app.get("/", function(req, res){
   Post.find( function(err, resultDocs){
     console.log(resultDocs);
 
-    res.render("home", {pageTitle: "Hello World", homeStartingContent: homeStartingContent, blogPostArr: resultDocs});
+    res.render("home", { homeStartingContent: homeStartingContent, blogPostArr: resultDocs});
 
     resultDocs.forEach(function(doc){
       console.log(doc.title);
       console.log(doc.content);
     });
+
   });
 });
+
 
 
 app.get("/compose", function(req, res){
@@ -53,9 +55,15 @@ app.post("/compose", function(req, res){
     title: req.body.postTitle,
     content: req.body.postContent
   });
-  post.save();
+  // post.save();
+  // res.redirect("/");
+  // ..Below will ONLY rediect AFTER its saved.  ..Above .save() is a promise, can be redirected before saved.
+  post.save(function(err){
+    if(!err){
+      res.redirect("/");
+    }
+  });
 
-  res.redirect("/");
 });
 
 
