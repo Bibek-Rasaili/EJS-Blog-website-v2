@@ -25,13 +25,9 @@ const postSchema = mongoose.Schema({
 
 const Post = mongoose.model("blogpost", postSchema);
 
+
 // Home/Root Page
 app.get("/", function(req, res){
-// connect here?
-  console.log("Home");
-
-
-  // res.render("home", {pageTitle: "Hello World", homeStartingContent: homeStartingContent, blogPostArr: []});
 
   Post.find( function(err, resultDocs){
     console.log(resultDocs);
@@ -42,20 +38,9 @@ app.get("/", function(req, res){
       console.log(doc.title);
       console.log(doc.content);
     });
-
-
   });
-
-
 });
 
-app.get("/about", function(req, res){
-  res.render("about", {aboutContent: aboutContent});
-});
-
-app.get("/contact", function(req, res){
-  res.render("contact", {contactContent: contactContent});
-});
 
 app.get("/compose", function(req, res){
   res.render("compose");
@@ -64,23 +49,24 @@ app.get("/compose", function(req, res){
 app.post("/compose", function(req, res){
   console.log(req.body.postTitle +" "+req.body.postContent);
 
-// database connect here?
-  // mongoose.connect("mongodb://localhost:27017/blogpostDB", { useNewUrlParser: true, useUnifiedTopology: true });
-// Schema and model hoisted because they are universal in this project
-
   const post = new Post({
     title: req.body.postTitle,
     content: req.body.postContent
   });
-
   post.save();
-  // may want to redirect to / (root / homepage) here
-  res.redirect("/");
 
-  // mongoose.connection.close(); .Connect hoisted //Close database connection
+  res.redirect("/");
 });
 
 
+
+app.get("/about", function(req, res){
+  res.render("about", {aboutContent: aboutContent});
+});
+
+app.get("/contact", function(req, res){
+  res.render("contact", {contactContent: contactContent});
+});
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
