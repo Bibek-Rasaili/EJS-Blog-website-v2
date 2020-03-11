@@ -30,26 +30,23 @@ const Post = mongoose.model("blogpost", postSchema);
 app.get("/", function(req, res){
 
   Post.find( function(err, resultDocs){
-    console.log(resultDocs);
 
     res.render("home", { homeStartingContent: homeStartingContent, blogPostArr: resultDocs});
-
-    resultDocs.forEach(function(doc){
-      console.log(doc.title);
-      console.log(doc.content);
-    });
-
+    // console.log(resultDocs);
+    // resultDocs.forEach(function(doc){
+    //   console.log(doc.title);
+    //   console.log(doc.content);
+    // });
   });
 });
-
 
 
 app.get("/compose", function(req, res){
   res.render("compose");
 });
 
+
 app.post("/compose", function(req, res){
-  console.log(req.body.postTitle +" "+req.body.postContent);
 
   const post = new Post({
     title: req.body.postTitle,
@@ -63,19 +60,19 @@ app.post("/compose", function(req, res){
       res.redirect("/");
     }
   });
-
 });
 
+
 app.get("/posts/:postId", function(req, res){
-  console.log(req.params.postId);
 
   const id = req.params.postId;
-  // find post by Id then display, title and content
+  // find post by Id then display title and content
   Post.findById(id, function(err, resultDoc){
     console.log(resultDoc);
     if(err) {
       console.log(err);
       res.render("post", { postTitle:  "Error! This post does not exist" , postContent: "Absolutely nothing here."});
+      // still crashes here - but this is currently not in the scope of the project at the moment.
     }
       res.render("post", { postTitle: resultDoc.title , postContent: resultDoc.content });
   });
