@@ -66,6 +66,20 @@ app.post("/compose", function(req, res){
 
 });
 
+app.get("/posts/:postId", function(req, res){
+  console.log(req.params.postId);
+
+  const id = req.params.postId;
+  // find post by Id then display, title and content
+  Post.findById(id, function(err, resultDoc){
+    console.log(resultDoc);
+    if(err) {
+      console.log(err);
+      res.render("post", { postTitle:  "Error! This post does not exist" , postContent: "Absolutely nothing here."});
+    }
+      res.render("post", { postTitle: resultDoc.title , postContent: resultDoc.content });
+  });
+});
 
 
 app.get("/about", function(req, res){
