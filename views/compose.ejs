@@ -2,4 +2,14 @@
 
 <h1>Compose</h1>
 
+<form action="/compose" method="post">
+  <div class="form-group">
+    <label for="postTitle">Post Tile: </label>
+    <input class="form-control" type="text" id="postTitle" name="postTitle" placeholder="Blog Title" autofocus required>
+    <label for="postContent">Post Content: </label>
+    <textarea class="form-control" id="postContent" name="postContent" placeholder="Blog Content" rows="8" cols="80" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary" name="button">Submit</button>
+</form>
+
 <%- include('footer'); -%>
