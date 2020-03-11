@@ -1,5 +1,16 @@
 <%- include('header'); -%>
 
-<h1> Hello </h1>
+<h1> <%= pageTitle %> </h1>
+<p><%= homeStartingContent %></p>
 
+<% console.log(blogPostArr);%>
+
+<% if (blogPostArr.length === 0) { %>
+ <p>This this empty - Delete this later</p>
+<% } else { %>
+<%  blogPostArr.forEach(function(blogPost){ %>
+    <h1><%= blogPost.title %></h1>
+    <p><%= blogPost.content %></p>
+  <%});%>
+<%}%>
 <%- include('footer'); -%>
